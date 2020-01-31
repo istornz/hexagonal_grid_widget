@@ -262,9 +262,7 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
       onPanUpdate: _handlePanUpdate,
       onPanEnd: _handlePanEnd,
       child: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-          ),
+          color: Colors.transparent,
           key: _containerKey,
           child: childToShow),
     );
@@ -301,22 +299,6 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
 
       _hexLayoutRadius =
           originHexToPixel.distanceTo(_hexLayout.last.hex.toPixel(layout));
-
-      if (originHexToPixel.y > origin.x + _hexGridContext.maxSize / 2 ||
-          originHexToPixel.y < origin.x - _hexGridContext.maxSize / 2 ||
-          originHexToPixel.x > origin.y + _hexGridContext.maxSize / 2 ||
-          originHexToPixel.x < origin.y - _hexGridContext.maxSize / 2) {
-        hexWidgetList.add(Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-                padding: EdgeInsets.only(bottom: 16),
-                child: RaisedButton(
-                  child: Text("Center"),
-                  elevation: 4,
-                  textTheme: ButtonTextTheme.normal,
-                  onPressed: () => _centerHexLayout(),
-                ))));
-      }
     }
 
     return hexWidgetList;
