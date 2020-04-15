@@ -36,6 +36,7 @@ class HexGridWidget<T extends HexGridChild> extends StatefulWidget {
 class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
     with SingleTickerProviderStateMixin, AfterLayoutMixin<HexGridWidget> {
   final GlobalKey _containerKey = GlobalKey();
+  Size _containerSize;
   bool _isAfterFirstLayout = false;
 
   HexGridContext _hexGridContext;
@@ -122,13 +123,21 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
   }
 
   double get containerHeight {
-    RenderBox containerBox = _containerKey.currentContext.findRenderObject();
-    return containerBox.size.height;
+    // HACK: There is a bug, which containerBox.size can be null
+    if (_containerSize == null) {
+      RenderBox containerBox = _containerKey.currentContext.findRenderObject();
+      _containerSize = containerBox.size;
+    }
+    return _containerSize.height;
   }
 
   double get containerWidth {
-    RenderBox containerBox = _containerKey.currentContext.findRenderObject();
-    return containerBox.size.width;
+    // HACK: There is a bug, which containerBox.size can be null
+    if (_containerSize == null) {
+      RenderBox containerBox = _containerKey.currentContext.findRenderObject();
+      _containerSize = containerBox.size;
+    }
+    return _containerSize.width;
   }
 
   ///Ensures we will always have hex widgets visible
