@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   hexagonal_grid: ^1.0.4
-  tuple: ^1.0.2
-  after_layout: ^1.0.7
+  tuple: ^1.0.3
+  after_layout: ^1.0.7+2
 
 dev_dependencies:
   flutter_test:
