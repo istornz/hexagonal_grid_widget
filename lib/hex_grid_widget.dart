@@ -75,8 +75,6 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
   @override
   void initState() {
     super.initState();
-
-    _hexLayout = UIHex.toSpiralHexLayout(widget.children);
     _isAfterFirstLayout = false;
 
     _controller = AnimationController(vsync: this)
@@ -255,6 +253,9 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
 
   @override
   Widget build(BuildContext context) {
+    // HACK: Load hex layout on build to reload new children dynamicly !
+    _hexLayout = UIHex.toSpiralHexLayout(widget.children);
+
     Widget childToShow;
     if (!_isAfterFirstLayout) {
       childToShow = Container();
@@ -294,12 +295,14 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
     final double containerWidth = this.containerWidth;
     final double containerHeight = this.containerHeight;
 
-    for (int i = 0; i < _hexLayout.length; i++) {
-      Positioned hexWidget = _createPositionWidgetForHex(widget.children[i],
-          _hexLayout[i], layout, containerWidth, containerHeight);
+    if (widget.children.length >= _hexLayout.length) {
+      for (int i = 0; i < _hexLayout.length; i++) {
+        Positioned hexWidget = _createPositionWidgetForHex(widget.children[i],
+            _hexLayout[i], layout, containerWidth, containerHeight);
 
-      if (hexWidget != null) {
-        hexWidgetList.add(hexWidget);
+        if (hexWidget != null) {
+          hexWidgetList.add(hexWidget);
+        }
       }
     }
 
