@@ -5,14 +5,13 @@ author: Jonathan Beckman <jonathantbeckman@gmail.com>
 homepage: https://gitlab.com/jbeckman/hexagonal_grid_widget
 
 environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  hexagonal_grid: ^1.0.4
-  tuple: ^1.0.3
-  after_layout: ^1.0.7+2
+  tuple: ^2.0.0
+  after_layout: ^1.1.0
 
 dev_dependencies:
   flutter_test:

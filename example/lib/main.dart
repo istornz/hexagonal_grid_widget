@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:hexagonal_grid/hexagonal_grid.dart';
+
+import 'package:hexagonal_grid_widget/hexagonal_grid.dart';
 import 'package:hexagonal_grid_widget/hex_grid_child.dart';
 import 'package:hexagonal_grid_widget/hex_grid_context.dart';
 import 'package:hexagonal_grid_widget/hex_grid_widget.dart';
@@ -20,15 +21,19 @@ class HexGridWidgetExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home: Scaffold(
         appBar: AppBar(
           title: Text("Example"),
           centerTitle: true,
         ),
         body: HexGridWidget(
-            children: createHexGridChildren(_numOfHexGridChildWidgets),
-            hexGridContext: HexGridContext(_minHexWidgetSize, _maxHexWidgetSize,
-                _scaleFactor, _densityFactor, _velocityFactor, _flatLayout)));
+          children: createHexGridChildren(_numOfHexGridChildWidgets),
+          hexGridContext: HexGridContext(_minHexWidgetSize, _maxHexWidgetSize,
+              _scaleFactor, _densityFactor, _velocityFactor, _flatLayout),
+        ),
+      ),
+    );
   }
 
   //This would likely be a service (RESTful or DB) that retrieves some data and
@@ -65,23 +70,23 @@ class ExampleHexGridChild extends HexGridChild {
   //This is only one example of the customization you can expect from these
   // framework hooks
   @override
-  Widget toHexWidget(BuildContext context, HexGridContext hexGridContext,
+  Widget toHexWidget(BuildContext context, HexGridContext? hexGridContext,
       double size, UIHex hex) {
     return Container(
-        padding: EdgeInsets.all((hexGridContext.maxSize - size) / 2),
+        padding: EdgeInsets.all((hexGridContext!.maxSize - size) / 2),
         child: Container(
             width: size,
             height: size,
             decoration: BoxDecoration(
-              color: orbitalColors[hex.orbital % orbitalColors.length],
+              color: orbitalColors[hex.orbital! % orbitalColors.length],
               shape: BoxShape.circle,
             )));
   }
 
   @override
   double getScaledSize(
-      HexGridContext hexGridContext, double distanceFromOrigin) {
-    double scaledSize = hexGridContext.maxSize -
+      HexGridContext? hexGridContext, double distanceFromOrigin) {
+    double scaledSize = hexGridContext!.maxSize -
         (distanceFromOrigin * hexGridContext.scaleFactor);
     return max(scaledSize, hexGridContext.minSize);
   }
