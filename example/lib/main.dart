@@ -16,21 +16,33 @@ class HexGridWidgetExample extends StatelessWidget {
   final double _scaleFactor = 0.2;
   final double _densityFactor = 1.75;
   final double _velocityFactor = 0.3;
+  final double _scrollVelocityFactor = 5.0;
   final bool _flatLayout = true;
   final int _numOfHexGridChildWidgets = 10;
+  final HexGridController _hexGridController = new HexGridController();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Example"),
-          centerTitle: true,
-        ),
+        appBar: AppBar(title: Text("Example"), centerTitle: true, actions: [
+          IconButton(
+              onPressed: () {
+                _hexGridController.resetPosition();
+              },
+              icon: Icon(Icons.track_changes_outlined))
+        ]),
         body: HexGridWidget(
           children: createHexGridChildren(_numOfHexGridChildWidgets),
-          hexGridContext: HexGridContext(_minHexWidgetSize, _maxHexWidgetSize,
-              _scaleFactor, _densityFactor, _velocityFactor, _flatLayout),
+          hexGridContext: HexGridContext(
+            minSize: _minHexWidgetSize,
+            densityFactor: _densityFactor,
+            scaleFactor: _scaleFactor,
+            maxSize: _maxHexWidgetSize,
+            velocityFactor: _velocityFactor,
+            controller: _hexGridController,
+            scrollVelocityFactor: _scrollVelocityFactor,
+          ),
         ),
       ),
     );

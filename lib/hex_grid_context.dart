@@ -1,3 +1,7 @@
+import 'package:flutter/widgets.dart';
+
+import 'hex_grid_widget.dart';
+
 class HexGridContext {
   ///Minimum size of a individual hex widget
   final double minSize;
@@ -23,6 +27,18 @@ class HexGridContext {
   /// to flat
   final bool flatLayout;
 
-  HexGridContext(this.minSize, this.maxSize, this.scaleFactor,
-      this.densityFactor, this.velocityFactor, [this.flatLayout = true]);
+  final double scrollVelocityFactor;
+
+  final HexGridController? controller;
+
+  HexGridContext({
+    required this.minSize,
+    required this.maxSize,
+    required this.scaleFactor,
+    required this.densityFactor,
+    required this.velocityFactor,
+    this.flatLayout = true,
+    this.scrollVelocityFactor = 1.0,
+    this.controller,
+  });
 }

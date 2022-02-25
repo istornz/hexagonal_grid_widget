@@ -10,6 +10,10 @@ import 'package:tuple/tuple.dart';
 
 import 'hexagonal_grid.dart';
 
+class HexGridController {
+  late void Function() resetPosition;
+}
+
 @immutable
 class HexGridWidget<T extends HexGridChild> extends StatefulWidget {
   HexGridWidget(
@@ -67,10 +71,10 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
       _scrollListener = scrollListener;
     }
 
-    if (offsetNotifier != null) {
-      _offsetNotifier = offsetNotifier;
-      _offsetNotifier!.addListener(updateOffsetFromNotifier);
-    }
+    _hexGridContext!.controller?.resetPosition = this.resetPosition;
+
+    _offsetNotifier = offsetNotifier;
+    _offsetNotifier!.addListener(updateOffsetFromNotifier);
   }
 
   @override
@@ -119,6 +123,10 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
       xViewPos = offset.dx;
       yViewPos = offset.dy;
     });
+  }
+
+  void resetPosition() {
+    offset = Offset(origin.x.toDouble(), origin.y.toDouble());
   }
 
   double get containerHeight {
@@ -249,7 +257,7 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
 
     _controller!
       ..value = 0.0
-      ..fling(velocity: velocity);
+      ..fling(velocity: _hexGridContext!.scrollVelocityFactor);
   }
 
   _sendScrollValues() {
