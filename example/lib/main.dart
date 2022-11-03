@@ -28,7 +28,7 @@ class HexGridWidgetExample extends StatelessWidget {
         appBar: AppBar(title: Text("Example"), centerTitle: true, actions: [
           IconButton(
               onPressed: () {
-                _hexGridController.resetPosition();
+                _hexGridController.resetPosition?.call();
               },
               icon: Icon(Icons.track_changes_outlined))
         ]),

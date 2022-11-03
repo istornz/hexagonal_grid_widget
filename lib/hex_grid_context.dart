@@ -29,7 +29,7 @@ class HexGridContext {
 
   final double scrollVelocityFactor;
 
-  final HexGridController? controller;
+  final HexGridController controller;
 
   HexGridContext({
     required this.minSize,
@@ -37,8 +37,8 @@ class HexGridContext {
     required this.scaleFactor,
     required this.densityFactor,
     required this.velocityFactor,
+    required this.controller,
     this.flatLayout = true,
     this.scrollVelocityFactor = 1.0,
-    this.controller,
   });
 }

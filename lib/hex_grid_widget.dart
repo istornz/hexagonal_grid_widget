@@ -11,15 +11,16 @@ import 'package:tuple/tuple.dart';
 import 'hexagonal_grid.dart';
 
 class HexGridController {
-  late void Function() resetPosition;
+  void Function()? resetPosition;
 }
 
 @immutable
 class HexGridWidget<T extends HexGridChild> extends StatefulWidget {
-  HexGridWidget(
-      {required this.hexGridContext,
-      required this.children,
-      this.scrollListener});
+  HexGridWidget({
+    required this.hexGridContext,
+    required this.children,
+    this.scrollListener,
+  });
 
   final HexGridContext hexGridContext;
   final List<T> children;
@@ -71,7 +72,7 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
       _scrollListener = scrollListener;
     }
 
-    _hexGridContext!.controller?.resetPosition = this.resetPosition;
+    _hexGridContext!.controller.resetPosition = this.resetPosition;
 
     _offsetNotifier = offsetNotifier;
     _offsetNotifier!.addListener(updateOffsetFromNotifier);
@@ -81,6 +82,8 @@ class _HexGridWidgetState<T extends HexGridChild> extends State<HexGridWidget>
   void initState() {
     super.initState();
     _isAfterFirstLayout = false;
+    
+    _hexGridContext!.controller.resetPosition = this.resetPosition;
 
     _controller = AnimationController(vsync: this)
       ..addListener(_handleFlingAnimation);
